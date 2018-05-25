@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+	<div id="content"></div>
+
+	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDyRJP1MTCQjiE8yjs001RkVrd2sl96kwM",
+	    authDomain: "pt12311-web.firebaseapp.com",
+	    databaseURL: "https://pt12311-web.firebaseio.com",
+	    projectId: "pt12311-web",
+	    storageBucket: "pt12311-web.appspot.com",
+	    messagingSenderId: "876099975341"
+	  };
+	  firebase.initializeApp(config);
+	  var database = firebase.database();
+
+	  var postRef = database.ref('posts');
+	  var users = [];
+	  postRef.on('value', function(snapshot) {
+	  	$('#content').empty();
+	  	snapshot.forEach(function(child){
+	  		var item = child.val();
+	  		var itemContent = `<div>
+	  			<h3>${item.title}</h3>
+	  			<img src="${item.image}" width="200"/>
+	  			<p>${item.content}</p>
+	  		</div>`;
+	  		
+	  		$('#content').append(itemContent);
+
+	  	});
+	  });
+	</script>
+</body>
+</html>
+<!-- // snapshot.forEach((child) => {
+  		// 	users.push(child.val());
+  		// });
+  		// console.log(users); -->
