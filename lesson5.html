@@ -29,7 +29,7 @@
 		$('#val').keyup(function(){
 			var content = $(this).val();
 			content = content.toUpperCase();
-			console.log(content);
+			$(this).val(content);
 		});
 
 		$('#cha').click(function(){
@@ -42,7 +42,7 @@
 
 
 		var bg = 'green';
-		$('#target').click(function(){
+		$('#target').on( 'click mouseover mouseout', function(){
 			bg = bg == 'green' ? 'red' : 'green';
 			$(this).css('background', bg);
 		});
