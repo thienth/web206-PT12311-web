@@ -5,8 +5,46 @@
 	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
+	<div class="container">
+		<button id="addModal" class="btn btn-sm btn-success">Add new</button>
+		<br>
+		
+		<div id="content" class="row"></div>
+	</div>
 
-	<div id="content"></div>
+	<div class="modal" tabindex="-1" role="dialog" id="postForm">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="form-group">
+	        	<label>Title</label>
+	        	<input type="text" id="title" placeholder="Enter title" class="form-control">
+	        </div>
+	        <div class="form-group">
+	        	<label>Image</label>
+	        	<input type="file" id="image" class="form-control">
+	        </div>
+	        <div class="form-group">
+	        	<label>Short description</label>
+	        	<input type="text" id="shortDesc" class="form-control" placeholder="Enter short description">
+	        </div>
+	        <div class="form-group">
+	        	<label>Content</label>
+	        	<textarea id="content" class="form-control"></textarea>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary closemodal"  data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -30,16 +68,27 @@
 	  	$('#content').empty();
 	  	snapshot.forEach(function(child){
 	  		var item = child.val();
-	  		var itemContent = `<div>
-	  			<h3>${item.title}</h3>
-	  			<img src="${item.image}" width="200"/>
-	  			<p>${item.content}</p>
-	  		</div>`;
+	  		var itemContent = `<div class="card col-md-3">
+								  <img class="card-img-top" src="${item.image}" alt="Card image cap">
+								  <div class="card-body">
+								    <h5 class="card-title">${item.title}</h5>
+								    <p class="card-text">${item.short_desc}</p>
+								    <a href="#" itemId="${child.key}" class="btn btn-primary">Go somewhere</a>
+								  </div>
+								</div>`;
 	  		
 	  		$('#content').append(itemContent);
 
 	  	});
 	  });
+
+
+	  $('#addModal').click(function(){
+	  	$('#postForm').show();
+	  });
+	  $(".closemodal").click(function(){
+	  	$('#postForm').hide();
+	  })
 	</script>
 </body>
 </html>
