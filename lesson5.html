@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.bg-red{
+			background: red !important;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="target" style="width: 200px; height: 200px; background: green; color: white;">
+		Demo .css()
+	</div>
+
+	<div id="add-class" style="width: 200px; height: 200px; background: green; color: white; margin-top: 20px;">
+		Demo .addClass('bg-red') - removeClass('bg-red') - .toggleClass('bg-red')
+	</div>
+
+	<br>
+
+	<h2 id="cha">Thẻ input checkbox ở đây: <input type="checkbox" id="cbx"></h2>
+	<input type="text" id="val">
+
+	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$('#val').keyup(function(){
+			var content = $(this).val();
+			content = content.toUpperCase();
+			$(this).val(content);
+		});
+
+		$('#cha').click(function(){
+			if($('#cbx').is(':checked')){
+				$('#cbx').prop('checked', false);
+			}else{
+				$('#cbx').prop('checked', true);
+			}
+		});
+
+
+		var bg = 'green';
+		$('#target').on( 'click mouseover mouseout', function(){
+			bg = bg == 'green' ? 'red' : 'green';
+			$(this).css('background', bg);
+		});
+
+		// $('#add-class').addClass('bg-red');
+		setInterval(function(){
+			$('#add-class').toggleClass('bg-red');
+		}, 500)
+	</script>
+
+
+</body>
+</html>
