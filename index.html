@@ -27,7 +27,7 @@
 	        </div>
 	        <div class="form-group">
 	        	<label>Image</label>
-	        	<input type="file" id="image" class="form-control">
+	        	<input type="text" id="image" placeholder="Enter image url" class="form-control">
 	        </div>
 	        <div class="form-group">
 	        	<label>Short description</label>
@@ -35,12 +35,12 @@
 	        </div>
 	        <div class="form-group">
 	        	<label>Content</label>
-	        	<textarea id="content" class="form-control"></textarea>
+	        	<textarea id="postContent" class="form-control"></textarea>
 	        </div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary closemodal"  data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button type="button" class="btn btn-primary btnsave">Save changes</button>
 	      </div>
 	    </div>
 	  </div>
@@ -49,21 +49,12 @@
 	<script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+	<script type="text/javascript" src="db.js"></script>
 	<script>
-	  // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyDyRJP1MTCQjiE8yjs001RkVrd2sl96kwM",
-	    authDomain: "pt12311-web.firebaseapp.com",
-	    databaseURL: "https://pt12311-web.firebaseio.com",
-	    projectId: "pt12311-web",
-	    storageBucket: "pt12311-web.appspot.com",
-	    messagingSenderId: "876099975341"
-	  };
-	  firebase.initializeApp(config);
-	  var database = firebase.database();
+		var postRef = database.ref('posts');
+		var users = [];
+		var formPostId= null;
 
-	  var postRef = database.ref('posts');
-	  var users = [];
 	  postRef.on('value', function(snapshot) {
 	  	$('#content').empty();
 	  	snapshot.forEach(function(child){
@@ -78,21 +69,48 @@
 								</div>`;
 	  		
 	  		$('#content').append(itemContent);
-
 	  	});
 	  });
 
 
 	  $('#addModal').click(function(){
+	  	formPostId = 0;
 	  	$('#postForm').show();
 	  });
 	  $(".closemodal").click(function(){
+	  	formPostId = null;
 	  	$('#postForm').hide();
-	  })
+	  });
+
+	  $('.btnsave').on('click', function(){
+	  	var data = {
+	  		title: $('#title').val(),
+	  		short_desc: $('#shortDesc').val(),
+	  		image: $('#image').val(),
+	  		content: $('#postContent').val()
+	  	}
+	  	if(formPostId == 0){
+	  		var postKey = firebase.database().ref().child('posts').push().key;
+	  		
+	  	}
+
+	  	var updates = {};
+	  	updates['/posts/' + postKey] = data;
+	  	firebase.database().ref().update(updates);
+	  	clearForm();
+  		
+	  	 
+	  });
+
+
+	  function clearForm(){
+	  	$('#title').val('');
+  		$('#shortDesc').val('');
+  		$('#image').val('');
+  		$('#postContent').val('');
+  		formPostId = null;
+  		$(".closemodal").click();
+	  }
 	</script>
 </body>
 </html>
-<!-- // snapshot.forEach((child) => {
-  		// 	users.push(child.val());
-  		// });
-  		// console.log(users); -->
