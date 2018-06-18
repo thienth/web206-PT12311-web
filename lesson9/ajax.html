@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<button onclick="getdata()">Click to load data</button>
+
+	<div class="target"></div>
+	<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	<script type="text/javascript">
+		function getdata(){
+			$.ajax({
+				url: "http://localhost/data.php",
+				method: 'GET',
+				data: {},
+				dataType: "JSON",
+				success: function(res){
+					res.forEach(function(v, i){
+						var unit = `
+						<div>
+							<img src="${v.image}" width="300" />
+							<h2>${v.title}</h2>
+							<b>${v.short_desc}</b>
+						</div>
+						`;
+						$('.target').append(unit);
+					})
+				}
+			})
+		}
+	</script>
+</body>
+</html>

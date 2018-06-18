@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<button style="width: 40px; height: 40px;">0</button>
+	<button style="width: 40px; height: 40px;">0</button>
+
+	<input type="text" name="">
+
+	<br>
+	<img src="http://ap.poly.edu.vn/user/ph/PH05013.jpg" width="300">
+	<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	<script type="text/javascript">
+		// function test(fn){
+		// 	// debugger;
+		// 	fn();
+		// }
+
+		// test(function(){
+		// 	alert('truong van hao den nhu than');
+		// })
+		function test(){
+			return function(){
+				console.log('something');
+			}
+		}
+
+		test()();
+
+
+
+
+		$( "img" ).on('error', function() {
+		    $( this ).attr( "src", "http://shec-labs.com/wp-content/themes/creativemag/images/default.png" );
+		  })
+
+		$('input').on('blur focus',function(){
+			var content = $(this).val();
+			$(this).val(content.toLowerCase());
+		});
+
+
+		$('button').click(function(){
+			var number = parseInt($(this).text());
+			$(this).text(++number);
+			if(number >= 5){
+				$(this).unbind('click');
+			}
+		});
+
+		$('button').mouseover(function(){
+			var number = parseInt($(this).text());
+			$(this).text(++number);
+		});
+	</script>
+</body>
+</html>

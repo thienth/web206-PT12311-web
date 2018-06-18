@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!-- <input type="text" id="city" placeholder="Enter city">
+	<button>Load data</button>
+	<div >
+		<h2>Ten TP: <span id="cityName"></span></h2>
+		<b>Nhiet do: <span id="nhietdo"></span> do C</b>
+	</div> -->
+
+	<button >Load data</button>
+	<table>
+		<thead>
+			<th>Title</th>
+			<th>Content</th>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+
+	<div id="overlay">
+		<img src="loading.gif" width="80"> 
+	</div>
+
+	<style type="text/css">
+		#overlay{
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: #fff;
+			opacity: 0.6;
+			text-align: center;
+			padding-top: 18%;
+			display: none;
+		}
+
+	</style>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript">
+		// $('button').on('click', function(){
+		// 	$.ajax({
+		// 		url: 'https://api.openweathermap.org/data/2.5/weather',
+		// 		method: 'GET',
+		// 		data: {
+		// 			APPID: 'da639e17dc6f3f4ce75700a06de1f385',
+		// 			q: $('#city').val(),
+		// 			units: 'metric'
+		// 		},
+		// 		dataType: "JSON",
+		// 		beforeSend: function(){
+		// 			$('button').text('loading...');
+		// 			$('tbody').empty();
+		// 		},
+		// 		success: function(res){
+		// 			$('#cityName').text(res.name);
+		// 			$('#nhietdo').text(res.main.temp);
+		// 		},
+		// 		error: function(err){
+		// 			console.log(err);
+		// 		},
+		// 		complete: function(){
+		// 			$('button').text('load data');
+		// 		}
+		// 	});
+		// });
+		$('button').on('click', function(){
+			$.ajax({
+				url: 'http://localhost/jsajax/data.php',
+				method: "POST",
+				data: {
+					name: 'thienth',
+					age: 30
+				},
+				dataType: 'JSON',
+				beforeSend: function(){
+					$('#overlay').css('display', 'block');
+					$('tbody').empty();
+				},
+				success: function(res){
+					
+					for (var i = 0; i < res.length; i++) {
+						$('tbody').append(`
+							<tr>
+								<td>${res[i].title}</td>
+								<td>${res[i].content}</td>
+							</tr>
+						`);
+					}
+				},
+				complete: function(){
+					$('#overlay').css('display', 'none');
+				},
+				error: function(err){
+					console.log(err);
+					alert('Loi roi, lien he anh thien dep trai');
+				}
+			});
+		});
+
+
+
+	</script>
+</body>
+</html>
